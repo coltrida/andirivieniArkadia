@@ -19,7 +19,6 @@ class CreateActivityLogTable extends Migration
             $table->nullableMorphs('causer', 'causer');
             $table->string('properties')->nullable();
             $table->timestamps();
-            $table->index('log_name');
         });
     }
 
@@ -28,6 +27,6 @@ class CreateActivityLogTable extends Migration
      */
     public function down()
     {
-        Schema::connection(config('activitylog.database_connection'))->dropIfExists(config('activitylog.table_name'));
+        Schema::dropIfExists(config('activitylog'));
     }
 }
