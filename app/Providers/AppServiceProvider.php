@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Http\Resources\ActivityResource;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -25,5 +26,6 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         ActivityResource::withoutWrapping();
+        Schema::defaultStringLength(191);
     }
 }
