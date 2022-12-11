@@ -55,7 +55,13 @@ class FrontController extends Controller
 
     public function eliminazioneUtentiFinti()
     {
-        User::whereNull('role')->delete();
+        $users = User::get();
+        foreach ($users as $user){
+            if ($user->id != $user->role){
+                $user->delete();
+            }
+        }
+        //User::whereNull('role')->delete();
     }
 
     public function controllo()
