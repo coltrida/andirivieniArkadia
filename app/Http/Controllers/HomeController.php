@@ -130,8 +130,9 @@ class HomeController extends Controller
         $annooggi = Carbon::now()->format('Y') + 0;
 
         $ragazzo = $request->ragazzo;
-        $client = Client::find($ragazzo);
-
+        $client = Client::with('asociazionimensili')->find($ragazzo);
+        $attivitaMensili = $client->asociazionimensili;
+//dd($client);
         $mese = $request->mese;
         $anno = $request->anno;
         $items = AttivitaCliente::with('activity', 'client')
@@ -146,12 +147,18 @@ class HomeController extends Controller
 
         $totale = 0;
 
-        $nome = '';
+        $nome = $client->name;
+
+        foreach ($attivitaMensili as $item) {
+            $totale = $totale + ($item->activity->cost);
+        }
 
         foreach ($items as $item) {
-            $nome = $item[0]->client->name;
+          //  dd($items);
+          //  dd($item[0]->client->name);
+
             if($item[0]->activity->tipo <> 'orario'){
-                $totale = $totale + $item[0]->activity->cost;
+                //$totale = $totale + $item[0]->activity->cost;
                 //dd($totale);
             } else {
                 foreach ($item as $ele) {
@@ -160,7 +167,8 @@ class HomeController extends Controller
             }
         }
 //dd($items);
-        return view('statistiche.visualizza', compact('ragazzi', 'client', 'items', 'annooggi', 'totale', 'nome', 'mese', 'anno'));
+        return view('statistiche.visualizza', compact('ragazzi',
+            'client', 'items', 'annooggi', 'totale', 'nome', 'mese', 'anno', 'attivitaMensili'));
     }
 
     public function chilometrivetture()
@@ -349,13 +357,17 @@ class HomeController extends Controller
         setlocale(LC_TIME, 'it_IT');
         Carbon::setLocale('it');
         $mese = $agricolturaService->nomeDelMese($giorno);
+        $anno = $agricolturaService->anno($giorno);
+
         $successivo = Carbon::make($giorno)->addMonth();
         $precedente = Carbon::make($giorno)->subMonth();
         $giornoInizioSecondaSettimana = Carbon::make($giorno)->firstOfMonth()->endOfWeek()->day + 1;
         $mesenumero = $agricolturaService->numeroDelMese($giorno);
 
-        $utente = $id ? $utente = Client::with(['agricoltura' => function ($query) use($mesenumero) {
-                $query->where('mese', $mesenumero);
+       // dd($mesenumero.' - '.$anno);
+
+        $utente = $id ? $utente = Client::with(['agricoltura' => function ($query) use($mesenumero, $anno) {
+                $query->where([['mese', $mesenumero], ['anno', $anno]]);
             }])->find($id) : null;
 
         $totaleSettimaneLavorate = $id ? $utente->agricoltura->where('tipo', 'P')->groupBy('settimana')->count() : null;
@@ -374,11 +386,12 @@ class HomeController extends Controller
         setlocale(LC_TIME, 'it_IT');
         Carbon::setLocale('it');
         $mese = $agricolturaService->nomeDelMese($giorno);
+        $anno = $agricolturaService->anno($giorno);
 
         $mesenumero = $agricolturaService->numeroDelMese($giorno);
 
-        $utente = $id ? $utente = Client::with(['agricoltura' => function ($query) use($mesenumero) {
-            $query->where('mese', $mesenumero);
+        $utente = $id ? $utente = Client::with(['agricoltura' => function ($query) use($mesenumero, $anno) {
+            $query->where([['mese', $mesenumero], ['anno', $anno]]);
         }])->find($id) : null;
 
         $totaleSettimaneLavorate = $id ? $utente->agricoltura->where('tipo', 'P')->groupBy('settimana')->count() : null;
@@ -410,6 +423,13 @@ class HomeController extends Controller
             'from' => '+393920222125',
             'text' => 'Marco Pirla!'
         ]);
+    }
+
+    public function eliminaViaggioSingoloCliente(ClientTrip $clientTrip)
+    {
+        activity()->useLog('EliminaKmSingoloCl')->log(auth()->user()->name." ha eliminato il viaggio ClientTrip con id $clientTrip->id ");
+        $res = $clientTrip->delete();
+        return ''.$res;
     }
 
 }

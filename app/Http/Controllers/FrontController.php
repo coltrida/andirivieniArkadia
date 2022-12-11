@@ -48,38 +48,48 @@ class FrontController extends Controller
             }
         }
 
+        $this->eliminazioneUtentiFinti();
+
         // return redirect()->back();
+    }
+
+    public function eliminazioneUtentiFinti()
+    {
+        User::whereNull('role')->delete();
     }
 
     public function controllo()
     {
         $tuttiFile = Storage::disk('inizio')->files('/');
+        //dd(Storage::disk('inizio')->files('/'));
         //return Storage::disk('local')->files('/backup/');
         //return ($tuttiFile);
         return
-            count($tuttiFile) === 6 &&
+            count($tuttiFile) === 5 &&
             Storage::disk('inizio')->size($tuttiFile[0]) === 603 &&
             Storage::disk('inizio')->size($tuttiFile[1]) === 0 &&
-            Storage::disk('inizio')->size($tuttiFile[2]) === 1795 &&
-            Storage::disk('inizio')->size($tuttiFile[3]) === 75 &&
-            Storage::disk('inizio')->size($tuttiFile[4]) === 24 &&
-            Storage::disk('inizio')->size($tuttiFile[5]) === 1222;
+            Storage::disk('inizio')->size($tuttiFile[2]) === 1767 &&
+            Storage::disk('inizio')->size($tuttiFile[3]) === 24 &&
+            Storage::disk('inizio')->size($tuttiFile[4]) === 1194;
     }
 
     private function calcoloSaldoMensilePrimaNota()
     {
         $primoGiornoDelMese = Carbon::now()->firstOfMonth();
         $orarioAttuale = Carbon::now()->hour;
+        $minutiAttuali = Carbon::now()->minute;
         $orario = 02;
+        $minuti = 30;
        // $primoGiornoDelMese = Carbon::now();
         $oggi = Carbon::now();
         echo 'Il primo del mese è: '.$primoGiornoDelMese->format('Y-m-d').' <br>';
         echo 'oggi è: '.$oggi->format('Y-m-d').' <br>';
         echo 'orario di calcolo saldo : '.$orario.' <br>';
-        echo 'orario attuale : '.$orarioAttuale;
+        echo 'orario attuale : '.$orarioAttuale.' <br>';
+        echo 'minuti attuali : '.$minutiAttuali;
         if (
             ($oggi->format('Y-m-d') === $primoGiornoDelMese->format('Y-m-d')) &&
-            ($orario === $orarioAttuale)
+            ($orario === $orarioAttuale) && ($minutiAttuali < $minuti)
         ){
             $totEntrateMese = Primanota::where([
                 ['anno', $oggi->year],

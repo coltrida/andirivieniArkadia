@@ -416,3 +416,14 @@ video {
 .azion{
 
 }
+
+.statTitleTable{
+    color: #000;
+    font-weight: bolder;
+    font-size: 22px;
+}
+
+.statEleTable{
+    color: #000;
+    font-size: 22px;
+}

@@ -25,4 +25,9 @@ class Client extends Model
     {
         return $this->hasMany(Costoragazzo::class);
     }
+
+    public function asociazionimensili()
+    {
+        return $this->hasMany(Associa::class)->with('activity');
+    }
 }

@@ -84,6 +84,7 @@ Route::post('/visualizzachilometriragazzi', [HomeController::class, 'visualizzac
 Route::get('/statistichechilometrivetture', [HomeController::class, 'chilometrivetture'])->name('statistiche_chilometri_vetture');
 Route::get('/statistichechilometriragazzi', [HomeController::class, 'chilometriragazzi'])->name('statistiche_chilometri_ragazzi');
 Route::get('/costiRagazzi', [CostoragazzoController::class, 'lista'])->name('costi_ragazzi');
+Route::get('/eliminaViaggioSingoloCliente/{clientTrip}', [HomeController::class, 'eliminaViaggioSingoloCliente'])->name('eliminaViaggioSingoloCliente');
 
 // --------------------- agricoltura --------------------------
 Route::get('/agricoltura/{giorno}/{id?}', [HomeController::class, 'agricoltura'])->name('agricoltura');

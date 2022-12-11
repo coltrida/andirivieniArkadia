@@ -21,7 +21,7 @@
                             <div class="custom-control custom-checkbox checkbox-xl">
                                 <input type="checkbox" class="custom-control-input" name="mesi[]" value="{{$i}}"
                                        id="defaultCheck1.{{$i}}">
-                                <label class="custom-control-label text-white" for="defaultCheck1.{{$i}}">{{$i}}</label>
+                                <label class="custom-control-label @if(isset($mesi)) black @else text-white @endif{{--@yield('mesi', 'text-white')--}}" for="defaultCheck1.{{$i}}">{{$i}}</label>
                             </div>
                         </div>
                     @endfor
