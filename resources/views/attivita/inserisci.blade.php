@@ -50,7 +50,7 @@
                 <div class="col-3">Attività</div>
                 <div class="col-3">Costo</div>
                 <div class="col-3">Tipologia</div>
-                <div class="col-3">Azioni</div>
+{{--                <div class="col-3">Azioni</div>--}}
 
         </div>
 
@@ -60,11 +60,11 @@
                     <div class="col-3">{{$item->name}}</div>
                     <div class="col-3">{{$item->cost}}</div>
                     <div class="col-3">{{$item->tipo}}</div>
-                    <div class="col-3 azion">
+                    {{--<div class="col-3 azion">
                         <a title="Elimina" href="{{route('elimina_attivita', $item->id)}}" class="btn btn-danger mr-1" id="{{$item->id}}">
                             <i class="fas fa-trash-alt"></i>
                         </a>
-                    </div>
+                    </div>--}}
 
             </div>
         @endforeach

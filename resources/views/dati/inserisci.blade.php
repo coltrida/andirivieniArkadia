@@ -77,7 +77,7 @@
             <div class="alert alert-primary mt-2 flex justify-content-between align-items-center pl-1" role="alert" id="ass{{$item->id}}">
                     <div class="col">{{$item->client->name}}</div>
                     <div class="col">{{$item->giorno}}</div>
-                    <div class="col">{{$item->activity->name}}</div>
+                    <div class="col">{{$item->activity ? $item->activity->name : ''}}</div>
                     <div class="col flex justify-content-center">{{$item->quantita}}</div>
                     <div class="col flex justify-content-center">
                         <a title="Elimina" href="{{route('elimina_dati', $item->id)}}" class="btn btn-danger" id="{{$item->id}}">

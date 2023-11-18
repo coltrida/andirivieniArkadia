@@ -44,11 +44,13 @@
         </div>
         @foreach($item as $ele)
             <div class="alert mt-2 flex justify-content-between border" role="alert" id="ass{{$ele->id}}">
-                <div class="col statEleTable">{{$ele->activity->name}}</div>
+                <div class="col statEleTable">{{$ele->activity ? $ele->activity->name : ''}}</div>
                 <div class="col statEleTable">{{$ele->giorno}}</div>
                 <div class="col statEleTable text-center">{{$ele->quantita}}</div>
-                <div class="col statEleTable">{{$ele->activity->tipo}}</div>
-                <div class="col statEleTable text-center">€ <span id="cost{{$ele->id}}">{{$ele->activity->cost}}</span> </div>
+                <div class="col statEleTable">{{$ele->activity ? $ele->activity->tipo : ''}}</div>
+                <div class="col statEleTable text-center">€ <span id="cost{{$ele->id}}">
+                        {{$ele->activity ? $ele->activity->cost : ''}}</span>
+                </div>
                 <div class="col">
                     <a title="Elimina" href="{{route('elimina_dati', $ele->id)}}" class="btn btn-danger" id="{{$ele->id}}">
                         <i class="fas fa-trash-alt"></i>

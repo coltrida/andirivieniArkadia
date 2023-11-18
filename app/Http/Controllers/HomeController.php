@@ -54,6 +54,7 @@ class HomeController extends Controller
     public function dati()
     {
         $items = AttivitaCliente::with('client', 'activity')->latest()->paginate(10);
+        //dd($items);
         $attivita = Activity::latest()->get();
         $ragazzi = Client::orderBy('name')->get();
 
@@ -144,7 +145,7 @@ class HomeController extends Controller
         ])
             ->get()
             ->groupBy('activity_id');
-
+//dd($items);
         $totale = 0;
 
         $nome = $client->name;
@@ -156,17 +157,19 @@ class HomeController extends Controller
         foreach ($items as $item) {
           //  dd($items);
           //  dd($item[0]->client->name);
-
-            if($item[0]->activity->tipo <> 'orario'){
-                //$totale = $totale + $item[0]->activity->cost;
-                //dd($totale);
-            } else {
-                foreach ($item as $ele) {
-                      $totale = $totale + ($ele->costo);
+            if ($item[0]->activity){
+                if($item[0]->activity->tipo <> 'orario'){
+                    //$totale = $totale + $item[0]->activity->cost;
+                    //dd($totale);
+                } else {
+                    foreach ($item as $ele) {
+                        $totale = $totale + ($ele->costo);
+                    }
                 }
             }
+
         }
-//dd($items);
+
         return view('statistiche.visualizza', compact('ragazzi',
             'client', 'items', 'annooggi', 'totale', 'nome', 'mese', 'anno', 'attivitaMensili'));
     }

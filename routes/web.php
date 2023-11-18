@@ -18,8 +18,13 @@ Auth::routes();
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 
 Route::get('/migrate', function (){
-    \Illuminate\Support\Facades\Artisan::call('migrate --path=/database/migrations/2022_04_27_193446_add_giorno_to_primanota.php');
+    \Illuminate\Support\Facades\Artisan::call('migrate --path=/database/migrations/2023_09_17_203300_add_descrizione_to_table.php');
+//    \Illuminate\Support\Facades\Artisan::call('migrate --path=/database/migrations/2022_04_27_193446_add_giorno_to_primanota.php');
 });
+
+// --------------------- operatori --------------------------
+Route::get('/listaOperatori', [FrontController::class, 'listaOperatori'])->name('listaOperatori');
+Route::get('/eliminaOperatore/{idUser}', [FrontController::class, 'eliminaOperatore'])->name('eliminaOperatore');
 
 // --------------------- attività --------------------------
 Route::get('/inserisciattivita', [ActivityController::class, 'index'])->name('attivita');
@@ -101,3 +106,11 @@ Route::get('/sendsms', [HomeController::class, 'sendsms'])->name('sendsms');
 Route::post('inserisciCostoRagazzoMese', [CostoragazzoController::class, 'inserisci'])->name('inserisci_costo_ragazzo_mese');
 
 Route::get('/calendario', [FrontController::class, 'calendario'])->name('calendario');
+
+// --------------------- ricevute --------------------------
+Route::get('/ricevute', [FrontController::class, 'ricevute'])->name('ricevute');
+Route::post('/ricevute', [FrontController::class, 'salvaEstampaRicevuta'])->name('salvaEstampaRicevuta');
+Route::get('/listaRicevute', [FrontController::class, 'listaRicevute'])->name('listaRicevute');
+Route::post('/listaRicevute', [FrontController::class, 'ricercalistaRicevute'])->name('ricercalistaRicevute');
+Route::get('/eliminaRicevuta/{idRicevuta}', [FrontController::class, 'eliminaRicevuta'])->name('eliminaRicevuta');
+Route::get('/stampaRicevuta/{idRicevuta}', [FrontController::class, 'stampaRicevuta'])->name('stampaRicevuta');

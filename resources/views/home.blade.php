@@ -7,7 +7,14 @@
             <div class="col-lg-6 col-xl-6 col-md-12 col-sm-12 col-xs-12">
                 <h1>Arkadia Onlus</h1>
             </div>
-            <div class="col-lg-6 col-xl-6 col-md-12 col-sm-12 col-xs-12 bg-success p-4">
+            <div class="col-lg-6 col-xl-6 col-md-12 col-sm-12 col-xs-12 p-4">
+                @if(auth()->user()->isAdmin())
+                    <div class="col">
+                        <a class="btn btn-success btn-block shadow" href="{{route('listaOperatori')}}">Lista Operatori</a>
+                    </div>
+                @endif
+            </div>
+{{--            <div class="col-lg-6 col-xl-6 col-md-12 col-sm-12 col-xs-12 bg-success p-4">
                 <div class="h3" style="display: flex; justify-content: center">Prima Nota</div>
                 <div class="row">
                     <div class="col-lg-6 col-xl-6 col-md-12 col-sm-12 col-xs-12">
@@ -22,8 +29,7 @@
                         </div>
                     @endif
                 </div>
-
-            </div>
+            </div>--}}
 
         </div>
 
@@ -221,6 +227,46 @@
                                 <div class="ml-4 text-lg leading-7 font-semibold">
                                     <a href="{{route('calcoloSaldoOre')}}" class="text-gray-900">
                                         Aggiorna DataBase
+                                    </a>
+                                </div>
+                            </div>
+
+                            <div class="ml-12">
+                                <div class="mt-2 text-gray-600 dark:text-gray-400 text-sm">
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="p-6 border-t border-gray-200 dark:border-gray-700 md:border-l">
+                            <div class="flex items-center">
+                                <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                     stroke-width="2" viewBox="0 0 24 24" class="w-12 h-8 text-gray-500">
+                                    <path d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z"></path>
+                                </svg>
+                                <div class="ml-4 text-lg leading-7 font-semibold">
+                                    <a href="{{route('ricevute')}}" class="text-gray-900">
+                                        Ricevute
+                                    </a>
+                                </div>
+                            </div>
+
+                            <div class="ml-12">
+                                <div class="mt-2 text-gray-600 dark:text-gray-400 text-sm">
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="p-6 border-t border-gray-200 dark:border-gray-700 md:border-l">
+                            <div class="flex items-center">
+                                <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                     stroke-width="2" viewBox="0 0 24 24" class="w-8 h-8 text-gray-500">
+                                    <path d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z"></path>
+                                </svg>
+                                <div class="ml-4 text-lg leading-7 font-semibold">
+                                    <a href="{{route('listaRicevute')}}" class="text-gray-900">
+                                        Lista Ricevute
                                     </a>
                                 </div>
                             </div>
